@@ -6,7 +6,7 @@
 <p>This component demonstrates fetching data from a service.</p>
 
 <MudTable ServerData="OnDataLoad"
-		  Loading="_isLoading">
+		  Loading="WeatherForecastState.Value.IsLoading">
 	<HeaderContent>
 		<MudTh><MudTableSortLabel InitialDirection="SortDirection.Descending" SortLabel="@nameof(WeatherForecast.Date)" T="WeatherForecast">@nameof(WeatherForecast.Date)</MudTableSortLabel></MudTh>
 		<MudTh><MudTableSortLabel SortLabel="@nameof(WeatherForecast.TemperatureC)" T="WeatherForecast">@nameof(WeatherForecast.TemperatureC)</MudTableSortLabel></MudTh>

@@ -1,40 +1,43 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Fluxor;
+using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
+using TestMudBlazorFluxor.Actions;
 using TestMudBlazorFluxor.Data;
+using TestMudBlazorFluxor.States;
 
 namespace TestMudBlazorFluxor.Pages
 {
 	public partial class FetchData : ComponentBase
 	{
 		[Inject]
-		private WeatherForecastService ForecastService { get; set; }
+		private IState<WeatherForecastState> WeatherForecastState { get; set; }
 
-		private bool _isLoading;
+		[Inject]
+		private IDispatcher Dispatcher { get; set; }
 
 		private async Task<TableData<WeatherForecast>> OnDataLoad(TableState tableState)
 		{
-			_isLoading = true;
-			StateHasChanged();
+			await Task.Yield(); //workaround
 
-			try
+			Dispatcher.Dispatch(new QueryWeatherForecastAction
 			{
-				var data = await ForecastService.GetForecastAsync(tableState.Page, tableState.PageSize, tableState.SortLabel, tableState.SortDirection.ToString());
-				return new TableData<WeatherForecast>
-				{
-					Items = data.items,
-					TotalItems = data.total,
-				};
-			}
-			finally
+				PageIndex = tableState.Page,
+				PageSize = tableState.PageSize,
+				SortColumn = tableState.SortLabel,
+				SortDirection = tableState.SortDirection.ToString(),
+			});
+
+			var remoteData = await WeatherForecastState.Value.WeatherForecasts;
+			return new TableData<WeatherForecast>
 			{
-				_isLoading = false;
-				StateHasChanged();
-			}
+				Items = remoteData.Items,
+				TotalItems = remoteData.Total,
+			};
 		}
 	}
 }

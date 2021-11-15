@@ -29,7 +29,7 @@ namespace TestMudBlazorFluxor.Data
 			}).ToArray();
 		}
 
-		public async Task<(IEnumerable<WeatherForecast> items, int total)> GetForecastAsync(int pageIndex, int pageSize, string sortColumn, string sortDirection)
+		public async Task<WeatherForecastRemoteData> GetForecastAsync(int pageIndex, int pageSize, string sortColumn, string sortDirection)
 		{
 			await Task.Delay(500); //simulate long fetch
 
@@ -49,7 +49,11 @@ namespace TestMudBlazorFluxor.Data
 				.Take(pageSize)
 			;
 
-			return (items: items, total: WeatherForecasts.Length);
+			return new WeatherForecastRemoteData
+			{
+				Items = items,
+				Total = WeatherForecasts.Length,
+			};
 		}
 	}
 }
