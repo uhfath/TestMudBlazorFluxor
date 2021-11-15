@@ -8,10 +8,7 @@
     <PackageReference Include="Fluxor" Version="4.2.1" />
     <PackageReference Include="Fluxor.Blazor.Web" Version="4.2.1" />
     <PackageReference Include="Fluxor.Blazor.Web.ReduxDevTools" Version="4.2.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\MudBlazor\src\MudBlazor\MudBlazor.csproj" />
+    <PackageReference Include="MudBlazor" Version="5.2.0" />
   </ItemGroup>
 
 </Project>
