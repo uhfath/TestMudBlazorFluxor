@@ -1,0 +1,25 @@
+﻿@inherits ComponentBase
+@page "/fetchdata"
+
+<h1>Weather forecast</h1>
+
+<p>This component demonstrates fetching data from a service.</p>
+
+<MudTable ServerData="OnDataLoad"
+		  Loading="_isLoading">
+	<HeaderContent>
+		<MudTh><MudTableSortLabel InitialDirection="SortDirection.Descending" SortLabel="@nameof(WeatherForecast.Date)" T="WeatherForecast">@nameof(WeatherForecast.Date)</MudTableSortLabel></MudTh>
+		<MudTh><MudTableSortLabel SortLabel="@nameof(WeatherForecast.TemperatureC)" T="WeatherForecast">@nameof(WeatherForecast.TemperatureC)</MudTableSortLabel></MudTh>
+		<MudTh><MudTableSortLabel SortLabel="@nameof(WeatherForecast.TemperatureF)" T="WeatherForecast">@nameof(WeatherForecast.TemperatureF)</MudTableSortLabel></MudTh>
+		<MudTh><MudTableSortLabel SortLabel="@nameof(WeatherForecast.Summary)" T="WeatherForecast">@nameof(WeatherForecast.Summary)</MudTableSortLabel></MudTh>
+	</HeaderContent>
+	<RowTemplate>
+		<MudTd DataLabel="@nameof(WeatherForecast.Date)">@context.Date</MudTd>
+		<MudTd DataLabel="@nameof(WeatherForecast.TemperatureC)">@context.TemperatureC</MudTd>
+		<MudTd DataLabel="@nameof(WeatherForecast.TemperatureF)">@context.TemperatureF</MudTd>
+		<MudTd DataLabel="@nameof(WeatherForecast.Summary)">@context.Summary</MudTd>
+	</RowTemplate>
+	<PagerContent>
+		<MudTablePager />
+	</PagerContent>
+</MudTable>
