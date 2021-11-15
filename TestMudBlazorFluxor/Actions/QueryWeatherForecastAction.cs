@@ -41,10 +41,11 @@ namespace TestMudBlazorFluxor.Actions
 			public override async Task HandleAsync(QueryWeatherForecastAction action, IDispatcher dispatcher)
 			{
 				var remoteData = await _weatherForecastService.GetForecastAsync(action.PageIndex, action.PageSize, action.SortColumn, action.SortDirection);
+				action.WeatherForecastsSource.SetResult(remoteData);
+
 				dispatcher.Dispatch(new UpdateWeatherForecastAction
 				{
 					WeatherForecasts = remoteData,
-					WeatherForecastsSource = action.WeatherForecastsSource,
 				});
 			}
 		}

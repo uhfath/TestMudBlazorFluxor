@@ -24,15 +24,7 @@ namespace TestMudBlazorFluxor.Pages
 
 		private async Task<TableData<WeatherForecast>> OnDataLoad(TableState tableState)
 		{
-			//await Task.Yield(); //workaround
-
-			//Console.WriteLine("QUERY: {0}, {1}, {2}, {3}", tableState.Page, tableState.PageSize, tableState.SortLabel, tableState.SortDirection);
-			//return new TableData<WeatherForecast>
-			//{
-			//	Items = Enumerable.Empty<WeatherForecast>(),
-			//};
-
-			var weatherForecastsSource = new TaskCompletionSource<WeatherForecastRemoteData>(TaskCreationOptions.RunContinuationsAsynchronously);
+			var weatherForecastsSource = new TaskCompletionSource<WeatherForecastRemoteData>();
 
 			Dispatcher.Dispatch(new QueryWeatherForecastAction
 			{
@@ -44,7 +36,7 @@ namespace TestMudBlazorFluxor.Pages
 			});
 
 			var remoteData = await weatherForecastsSource.Task;
-			return new TableData<WeatherForecast>
+			return new()
 			{
 				Items = remoteData.Items,
 				TotalItems = remoteData.Total,
