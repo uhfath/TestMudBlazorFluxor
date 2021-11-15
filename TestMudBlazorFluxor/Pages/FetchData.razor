@@ -1,4 +1,4 @@
-﻿@inherits ComponentBase
+﻿@inherits FluxorComponent
 @page "/fetchdata"
 
 <h1>Weather forecast</h1>
@@ -8,7 +8,7 @@
 <MudTable ServerData="OnDataLoad"
 		  Loading="WeatherForecastState.Value.IsLoading">
 	<HeaderContent>
-		<MudTh><MudTableSortLabel InitialDirection="SortDirection.Descending" SortLabel="@nameof(WeatherForecast.Date)" T="WeatherForecast">@nameof(WeatherForecast.Date)</MudTableSortLabel></MudTh>
+		<MudTh><MudTableSortLabel SortLabel="@nameof(WeatherForecast.Date)" T="WeatherForecast">@nameof(WeatherForecast.Date)</MudTableSortLabel></MudTh>
 		<MudTh><MudTableSortLabel SortLabel="@nameof(WeatherForecast.TemperatureC)" T="WeatherForecast">@nameof(WeatherForecast.TemperatureC)</MudTableSortLabel></MudTh>
 		<MudTh><MudTableSortLabel SortLabel="@nameof(WeatherForecast.TemperatureF)" T="WeatherForecast">@nameof(WeatherForecast.TemperatureF)</MudTableSortLabel></MudTh>
 		<MudTh><MudTableSortLabel SortLabel="@nameof(WeatherForecast.Summary)" T="WeatherForecast">@nameof(WeatherForecast.Summary)</MudTableSortLabel></MudTh>

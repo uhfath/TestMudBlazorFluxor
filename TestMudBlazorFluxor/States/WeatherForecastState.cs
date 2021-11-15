@@ -15,6 +15,6 @@ namespace TestMudBlazorFluxor.States
 		public int PageSize { get; init; }
 		public string SortColumn { get; init; }
 		public string SortDirection { get; init; }
-		public Task<WeatherForecastRemoteData> WeatherForecasts { get; init; } = Task.FromResult<WeatherForecastRemoteData>(new());
+		public WeatherForecastRemoteData WeatherForecasts { get; init; }
 	}
 }

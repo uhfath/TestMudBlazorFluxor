@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using TestMudBlazorFluxor.Data;
 using TestMudBlazorFluxor.States;
@@ -15,8 +16,7 @@ namespace TestMudBlazorFluxor.Actions
 		public int PageSize { get; init; }
 		public string SortColumn { get; init; }
 		public string SortDirection { get; init; }
-
-		protected readonly TaskCompletionSource<WeatherForecastRemoteData> WeatherForecastsSource = new(TaskCreationOptions.RunContinuationsAsynchronously);
+		public TaskCompletionSource<WeatherForecastRemoteData> WeatherForecastsSource { get; init; }
 
 		[ReducerMethod]
 		public static WeatherForecastState Reduce(WeatherForecastState weatherForecastState, QueryWeatherForecastAction startWeatherForecastQueryAction) =>
@@ -27,7 +27,6 @@ namespace TestMudBlazorFluxor.Actions
 				PageSize = startWeatherForecastQueryAction.PageSize,
 				SortColumn = startWeatherForecastQueryAction.SortColumn,
 				SortDirection = startWeatherForecastQueryAction.SortDirection,
-				WeatherForecasts = startWeatherForecastQueryAction.WeatherForecastsSource.Task,
 			};
 
 		private class Effect : Effect<QueryWeatherForecastAction>
@@ -42,11 +41,10 @@ namespace TestMudBlazorFluxor.Actions
 			public override async Task HandleAsync(QueryWeatherForecastAction action, IDispatcher dispatcher)
 			{
 				var remoteData = await _weatherForecastService.GetForecastAsync(action.PageIndex, action.PageSize, action.SortColumn, action.SortDirection);
-				action.WeatherForecastsSource.SetResult(remoteData);
-
 				dispatcher.Dispatch(new UpdateWeatherForecastAction
 				{
 					WeatherForecasts = remoteData,
+					WeatherForecastsSource = action.WeatherForecastsSource,
 				});
 			}
 		}
